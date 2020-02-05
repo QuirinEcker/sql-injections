@@ -64,10 +64,6 @@ public class AccountRepository {
         statement.execute();
     }
 
-    public void display() {
-
-    }
-
     public void hackLogin(String username, String password) {
 
     }
