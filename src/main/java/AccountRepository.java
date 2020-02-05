@@ -78,7 +78,7 @@ public class AccountRepository {
     }
 
     public void saveLogin(String username, String password) throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("SELECT * FROM ACCOUNT WHERE NAME=?, AND PASSWORD=?");
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM ACCOUNT WHERE NAME=? AND PASSWORD=?");
 
         statement.setString(1, username);
         statement.setString(2, password);
