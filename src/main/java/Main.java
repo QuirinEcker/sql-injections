@@ -3,7 +3,12 @@ import java.sql.SQLException;
 
 public class Main {
 
-    private static Repository userRepository;
+    private static UserRepository userRepository = new UserRepository(
+            "localhost",
+            "app",
+            "app",
+            "db"
+    );
 
     public static void main(String[] args) {
         try (Connection conn = userRepository.getDs().getConnection()) {
