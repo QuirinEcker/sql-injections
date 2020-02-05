@@ -1,10 +1,8 @@
 import org.apache.derby.jdbc.ClientDataSource;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.IOException;
+import java.sql.*;
 
 public class AccountRepository {
 
@@ -50,9 +48,9 @@ public class AccountRepository {
 
     public void createTable() throws SQLException {
         PreparedStatement statement = conn.prepareStatement("CREATE TABLE ACCOUNT (" +
-                "userName VARCHAR(15) NOT NULL," +
-                "password VARCHAR(20)," +
-                "PRIMARY KEY (userName)" +
+                "NAME VARCHAR(15) NOT NULL," +
+                "PASSWORD VARCHAR(20)," +
+                "PRIMARY KEY (NAME)" +
                 ")");
         statement.executeUpdate();
     }
@@ -64,12 +62,37 @@ public class AccountRepository {
         statement.execute();
     }
 
-    public void hackLogin(String username, String password) {
+    public void hackLogin(String username, String password) throws SQLException {
+        Statement statement = conn.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM ACCOUNT WHERE NAME='"+username+"' AND PASSWORD='" + password + "'");
 
+        System.out.println();
+
+        while (resultSet.next()) {
+            System.out.println("Profile");
+            System.out.println("=======");
+
+            System.out.println("Name: " + resultSet.getString("NAME"));
+            System.out.println("Password: " + resultSet.getString("PASSWORD"));
+        }
     }
 
-    public void saveLogin(String username, String password) {
+    public void saveLogin(String username, String password) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM ACCOUNT WHERE NAME=?, AND PASSWORD=?");
 
+        statement.setString(1, username);
+        statement.setString(2, password);
+        ResultSet resultSet = statement.executeQuery();
+
+        System.out.println();
+
+        while (resultSet.next()) {
+            System.out.println("Profile");
+            System.out.println("=======");
+
+            System.out.println("Name: " + resultSet.getString("NAME"));
+            System.out.println("Password: " + resultSet.getString("PASSWORD"));
+        }
     }
 
     public Connection getConn() {

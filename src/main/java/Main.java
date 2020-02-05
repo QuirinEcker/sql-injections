@@ -18,15 +18,15 @@ public class Main {
         try (Connection conn = userRepository.getDs().getConnection()) {
             userRepository.setConn(conn);
             userRepository.resetTable();
-            userRepository.save(new Account("User0", "pw0"));
-            userRepository.save(new Account("User1", "pw1"));
-            userRepository.save(new Account("User2", "pw3"));
+            userRepository.save(new Account("user0", "pw0"));
+            userRepository.save(new Account("user1", "pw1"));
+            userRepository.save(new Account("user2", "pw2"));
 
             System.out.println("LogIn");
-            System.out.println("USERNAME: ");
-            String username = scanner.next();
-            System.out.println("PASSWORD: ");
-            String password = scanner.next();
+            System.out.print("USERNAME: ");
+            String username = scanner.nextLine();
+            System.out.print("PASSWORD: ");
+            String password = scanner.nextLine();
 
             userRepository.hackLogin(username, password);
         } catch (SQLException e) {
