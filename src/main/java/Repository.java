@@ -1,6 +1,9 @@
 import org.apache.derby.jdbc.ClientDataSource;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Repository {
 
@@ -31,11 +34,41 @@ public class Repository {
         return dataSource;
     }
 
-    public void resetTable() {
+    public DataSource getDs() {
+        return ds;
+    }
 
+    public void resetTable(Connection conn) throws SQLException {
+        dropTable(conn);
+        createTable(conn);
+    }
+
+    public void dropTable(Connection conn) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("DROP TABLE " + tableName);
+    }
+
+    public void createTable(Connection conn) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("CREATE TABLE " + tableName + " (" +
+                "userName VARCHAR(15) NOT NULL," +
+                "password VARCHAR(20)" +
+                "PRIMARY KEY (usernName)" +
+                ")");
     }
 
     public void save(Object obj) {
+
+    }
+
+    public void login(String username, String password) {
+        saveLogin(username, password);
+        hackLogin(username, password);
+    }
+
+    private void hackLogin(String username, String password) {
+
+    }
+
+    private void saveLogin(String username, String password) {
 
     }
 
