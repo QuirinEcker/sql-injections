@@ -1,9 +1,11 @@
 import org.apache.derby.jdbc.ClientDataSource;
 
 import javax.sql.DataSource;
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class UserRepository {
 
@@ -54,16 +56,26 @@ public class UserRepository {
                 ")");
     }
 
-    public void save(Object obj) {
+    public void save(User user) throws SQLException {
+    }
 
+    public void saveSave(User user) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("INSERT INTO USER VALUES (?, ?)");
+        statement.setString(1, user.getUsername());
+        statement.setString(2, user.getPassword());
+        statement.execute();
+    }
+
+    public void hackSave(User user) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.execute("INSERT INTO USER VALUES (" + user.getUsername() + ", " + user.getPassword() + ")");
     }
 
     public void display() {
 
     }
     public void login(String username, String password) {
-        saveLogin(username, password);
-        hackLogin(username, password);
+
     }
 
     private void hackLogin(String username, String password) {
