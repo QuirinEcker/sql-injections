@@ -12,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         try (Connection conn = userRepository.getDs().getConnection()) {
-            userRepository.createTable(conn);
+            userRepository.setConn(conn);
+            userRepository.createTable();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

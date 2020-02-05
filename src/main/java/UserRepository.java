@@ -12,6 +12,7 @@ public class UserRepository {
     private String password;
     private String db;
     private DataSource ds;
+    private Connection conn;
 
     public UserRepository(String host, String username, String password, String db) {
         this.host = host;
@@ -36,16 +37,16 @@ public class UserRepository {
         return ds;
     }
 
-    public void resetTable(Connection conn) throws SQLException {
-        dropTable(conn);
-        createTable(conn);
+    public void resetTable() throws SQLException {
+        dropTable();
+        createTable();
     }
 
-    public void dropTable(Connection conn) throws SQLException {
+    public void dropTable() throws SQLException {
         PreparedStatement statement = conn.prepareStatement("DROP TABLE USER");
     }
 
-    public void createTable(Connection conn) throws SQLException {
+    public void createTable() throws SQLException {
         PreparedStatement statement = conn.prepareStatement("CREATE TABLE USER (" +
                 "userName VARCHAR(15) NOT NULL," +
                 "password VARCHAR(20)" +
@@ -71,5 +72,13 @@ public class UserRepository {
 
     private void saveLogin(String username, String password) {
 
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 }
