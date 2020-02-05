@@ -1,13 +1,12 @@
 import org.apache.derby.jdbc.ClientDataSource;
 
 import javax.sql.DataSource;
-import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserRepository {
+public class AccountRepository {
 
     private String host;
     private String username;
@@ -16,7 +15,7 @@ public class UserRepository {
     private DataSource ds;
     private Connection conn;
 
-    public UserRepository(String host, String username, String password, String db) {
+    public AccountRepository(String host, String username, String password, String db) {
         this.host = host;
         this.username = username;
         this.password = password;
@@ -45,44 +44,35 @@ public class UserRepository {
     }
 
     public void dropTable() throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("DROP TABLE USER");
+        PreparedStatement statement = conn.prepareStatement("DROP TABLE ACCOUNT");
+        statement.executeUpdate();
     }
 
     public void createTable() throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("CREATE TABLE USER (" +
+        PreparedStatement statement = conn.prepareStatement("CREATE TABLE ACCOUNT (" +
                 "userName VARCHAR(15) NOT NULL," +
-                "password VARCHAR(20)" +
-                "PRIMARY KEY (usernName)" +
+                "password VARCHAR(20)," +
+                "PRIMARY KEY (userName)" +
                 ")");
+        statement.executeUpdate();
     }
 
-    public void save(User user) throws SQLException {
-    }
-
-    public void saveSave(User user) throws SQLException {
-        PreparedStatement statement = conn.prepareStatement("INSERT INTO USER VALUES (?, ?)");
+    public void save(Account user) throws SQLException {
+        PreparedStatement statement = conn.prepareStatement("INSERT INTO ACCOUNT VALUES (?, ?)");
         statement.setString(1, user.getUsername());
         statement.setString(2, user.getPassword());
         statement.execute();
     }
 
-    public void hackSave(User user) throws SQLException {
-        Statement statement = conn.createStatement();
-        statement.execute("INSERT INTO USER VALUES (" + user.getUsername() + ", " + user.getPassword() + ")");
-    }
-
     public void display() {
 
     }
-    public void login(String username, String password) {
+
+    public void hackLogin(String username, String password) {
 
     }
 
-    private void hackLogin(String username, String password) {
-
-    }
-
-    private void saveLogin(String username, String password) {
+    public void saveLogin(String username, String password) {
 
     }
 
